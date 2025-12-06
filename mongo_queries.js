@@ -16,7 +16,7 @@ function timeQuery(label, fn) {
   // Assume we are already using the ecommerce database
   db = db.getSiblingDB("ecommerce");
   
-  // ===== Query 2: Last 5 products viewed by a user in the past 6 months =====
+  //  Query 2: Last 5 products viewed by a user in the past 6 months 
   // Note: we use user_id = 1 as a "test user"; in the report you can treat this as Sarah's ID (e.g., looked up from the users table).
   function runQuery2() {
     const userId = 1; // assume user 1
@@ -44,7 +44,7 @@ function timeQuery(label, fn) {
     ]);
   }
   
-  // ===== Query 4: Products in the fashion category with color=blue or size=L (Mongo attribute part) =====
+  //  Query 4: Products in the fashion category with color=blue or size=L (Mongo attribute part) 
   function runQuery4() {
     // In the generated data, fashion has category_id = 1
     return db.products.find(
@@ -64,7 +64,7 @@ function timeQuery(label, fn) {
     );
   }
   
-  // ===== Query 5: Page view count per product, ordered by popularity (descending) =====
+  //  Query 5: Page view count per product, ordered by popularity (descending) 
   function runQuery5() {
     return db.events.aggregate([
       { $match: { event_type: "product_view" } },
@@ -78,7 +78,7 @@ function timeQuery(label, fn) {
     ]);
   }
   
-  // ===== Query 6: A user's search terms over the last 30 days, grouped by time-of-day and frequency =====
+  //  Query 6: A user's search terms over the last 30 days, grouped by time-of-day and frequency 
   function runQuery6() {
     const userId = 1; // same test user
   
@@ -147,7 +147,7 @@ function timeQuery(label, fn) {
     ]);
   }
   
-  // ===== Helper: run all Mongo-related queries once and time them =====
+  //  Helper: run all Mongo-related queries once and time them 
   function runAllMongoQueries() {
     print("=== Mongo performance test started ===");
     timeQuery("Query 2 (last 5 viewed products)", runQuery2);

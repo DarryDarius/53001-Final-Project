@@ -10,10 +10,10 @@ SET profiling = 1;
 -- Assume user_id = 1 represents “Sarah” in the synthetic dataset
 SET @sarah_id := 1;
 
--- ------------------------------------------------------------
+
 -- Query 1 (MySQL part) – fashion products core data
 -- Retrieve all products in the "fashion" category (core fields)
--- ------------------------------------------------------------
+
 SELECT
   p.product_id,
   p.name,
@@ -24,10 +24,10 @@ JOIN categories c
 WHERE c.name = 'fashion';
 
 
--- ------------------------------------------------------------
+
 -- Query 3 – Low stock items
 -- Check current stock level and return items with stock < 5
--- ------------------------------------------------------------
+
 SELECT
   product_id,
   name,
@@ -37,9 +37,9 @@ WHERE stock_qty < 5
 ORDER BY stock_qty ASC;
 
 
--- ------------------------------------------------------------
+
 -- Query 7 – All carts with device type, item count, and total amount
--- ------------------------------------------------------------
+
 SELECT
   c.cart_id,
   c.user_id,
@@ -56,9 +56,9 @@ GROUP BY
 ORDER BY c.updated_at DESC;
 
 
--- ------------------------------------------------------------
+
 -- Query 8 – All orders placed by Sarah with item details, payment, shipping, status
--- ------------------------------------------------------------
+
 SELECT
   o.order_id,
   o.order_date,
@@ -87,9 +87,9 @@ ORDER BY
   oi.order_item_id;
 
 
--- ------------------------------------------------------------
+
 -- Query 9 – Returned items by Sarah with refund status, amount, fees
--- ------------------------------------------------------------
+
 SELECT
   r.return_id,
   r.created_at,
@@ -112,9 +112,9 @@ WHERE u.user_id = @sarah_id
 ORDER BY r.created_at DESC;
 
 
--- ------------------------------------------------------------
+
 -- Query 10 – Average number of days between purchases for Sarah
--- ------------------------------------------------------------
+
 WITH user_orders AS (
   SELECT
     o.order_id,
@@ -140,9 +140,9 @@ SELECT
 FROM order_pairs;
 
 
--- ------------------------------------------------------------
+
 -- Query 11 – Cart abandonment rate in the past 30 days
--- ------------------------------------------------------------
+
 WITH recent_carts AS (
   SELECT
     cart_id,
@@ -163,12 +163,12 @@ SELECT
 FROM agg;
 
 
--- ------------------------------------------------------------
+
 -- Query 12 – Top 3 products most frequently purchased together with "headphones"
 -- Note: This assumes there is a category named 'headphones'. In the current data
 -- generation script, categories only include fashion / electronics / home_decor / other,
 -- so this query will return an empty result set for now, but it is still valid for performance testing.
--- ------------------------------------------------------------
+
 WITH headphone_orders AS (
   SELECT DISTINCT oi.order_id
   FROM order_items oi
@@ -203,9 +203,9 @@ ORDER BY cp.co_purchase_count DESC
 LIMIT 3;
 
 
--- ------------------------------------------------------------
+
 -- Query 13 – For each user: days since last purchase and total order count
--- ------------------------------------------------------------
+
 WITH user_last_order AS (
   SELECT
     o.user_id,
@@ -225,10 +225,10 @@ LEFT JOIN user_last_order ulo
 ORDER BY days_since_last_purchase DESC;
 
 
--- ------------------------------------------------------------
+
 -- Finally, inspect the execution time of all statements just run.
 -- The Duration column is in seconds and can be used to check the 2-second threshold.
--- ------------------------------------------------------------
+
 SHOW PROFILES;
 
 -- If you want to inspect a specific query in more detail, you can use:

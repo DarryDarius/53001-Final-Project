@@ -6,9 +6,8 @@ from datetime import datetime, timedelta
 
 random.seed(42)
 
-# -------------------------
+
 # CONFIG
-# -------------------------
 N_USERS = 1000
 N_PRODUCTS = 5000
 N_ORDERS = 100000
@@ -22,9 +21,6 @@ N_CARTS = 3000             # some converted, some abandoned
 NOW = datetime.utcnow()
 DAYS_BACK = 180
 
-# -------------------------
-# HELPERS
-# -------------------------
 
 def rand_date_within(days_back=DAYS_BACK):
     delta_days = random.randint(0, days_back)
@@ -48,10 +44,8 @@ def random_name():
 def random_string(n=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
-# -------------------------
-# 1. USERS
-# -------------------------
 
+# 1. USERS
 users = []
 for user_id in range(1, N_USERS + 1):
     name = random_name()
@@ -69,9 +63,7 @@ with open("users.csv", "w", newline="") as f:
     for u in users:
         writer.writerow([u["user_id"], u["name"], u["email"], u["created_at"]])
 
-# -------------------------
 # 2. CATEGORIES
-# -------------------------
 # Match your earlier design: fashion / electronics / home_decor / other
 
 categories = [
@@ -100,9 +92,8 @@ def choose_category_id():
     else:
         return 4
 
-# -------------------------
+
 # 3. PRODUCTS (relational) + Mongo product docs
-# -------------------------
 
 # Attribute templates like your design
 CATEGORY_TEMPLATES = {
@@ -222,9 +213,9 @@ with open("mongo_products.jsonl", "w") as f:
     for doc in mongo_products:
         f.write(json.dumps(doc) + "\n")
 
-# -------------------------
+
 # 4. SHIPPING OPTIONS
-# -------------------------
+
 
 shipping_options = [
     {"shipping_option_id": 1, "name": "Standard"},
@@ -238,10 +229,8 @@ with open("shipping_options.csv", "w", newline="") as f:
     for s in shipping_options:
         writer.writerow([s["shipping_option_id"], s["name"]])
 
-# -------------------------
-# 5. ORDERS + ORDER_ITEMS
-# -------------------------
 
+# 5. ORDERS + ORDER_ITEMS
 payment_methods = ["credit_card", "debit_card", "paypal", "bank_transfer"]
 order_statuses = ["completed", "pending", "cancelled", "refunded"]
 
@@ -308,10 +297,8 @@ with open("order_items.csv", "w", newline="") as f:
             oi["quantity"], oi["unit_price"]
         ])
 
-# -------------------------
-# 6. CARTS + CART_ITEMS
-# -------------------------
 
+# 6. CARTS + CART_ITEMS
 device_types = ["laptop", "tablet", "phone"]
 
 carts = []
@@ -384,10 +371,8 @@ with open("cart_items.csv", "w", newline="") as f:
             ci["quantity"], ci["unit_price"]
         ])
 
-# -------------------------
-# 7. SESSIONS + EVENTS (for MongoDB)
-# -------------------------
 
+# 7. SESSIONS + EVENTS (for MongoDB)
 # create some sessions per user
 sessions = []
 session_events = []
